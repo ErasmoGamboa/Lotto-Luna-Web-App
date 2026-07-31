@@ -128,21 +128,17 @@ function buildWheel() {
         gradientStr += `${color} ${start}deg ${end}deg${i === numSlices - 1 ? '' : ', '}`;
     }
     gradientStr += ')';
-    wheel.style.background = gradientStr;
+    wheel.style.background = 'none';
+    wheel.style.backgroundImage = 'url("Imagenes/Ruleta Arcanos.png")';
+    wheel.style.backgroundSize = 'cover';
+    wheel.style.backgroundPosition = 'center';
+    wheel.style.backgroundRepeat = 'no-repeat';
 
     arcanos.forEach((arcano, i) => {
         const slice = document.createElement('div');
         slice.classList.add('slice');
         slice.style.transform = `rotate(${i * sliceAngle}deg)`;
-        
-        let wheelName = arcano.nombre;
-        wheelName = wheelName.replace('La Suma Sacerdotisa', 'Sacerdotisa');
-        wheelName = wheelName.replace('La Rueda de la Fortuna', 'Rueda de la Fortuna');
-        if (wheelName.length > 18) {
-            wheelName = wheelName.substring(0, 16) + '...';
-        }
-        
-        slice.innerText = wheelName;
+        slice.style.display = 'none';
         wheel.appendChild(slice);
     });
 }

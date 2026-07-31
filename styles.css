@@ -143,6 +143,10 @@ p {
     position: relative;
     overflow: hidden;
     transition: transform 5.5s cubic-bezier(0.15, 0.85, 0.1, 1);
+    background-color: #1a002a;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Centro decorativo tipo moneda/medallón */
