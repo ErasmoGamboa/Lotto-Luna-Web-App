@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta del Tarot Diario - Lotto Luna</title>
+    <!-- Enlace a FontAwesome para los logos de redes sociales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- HEADER DE NAVEGACIÓN -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="logo.png" alt="Lotto Luna Logo" class="site-logo">
+                <span class="brand-name">Lotto Luna</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#faq">Preguntas Frecuentes</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" id="inicio">
+        <!-- LOGO PRINCIPAL EN EL CONTENIDO -->
+        <div class="main-logo-wrapper">
+            <img src="logo.png" alt="Lotto Luna" class="main-hero-logo">
+        </div>
+        
+        <h1>✨ El Oráculo de los Arcanos ✨</h1>
+        <p>El destino se revela automáticamente todos los días a las 7:00 PM (Hora Venezuela).</p>
+
+        <div class="roulette-container">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel"></div>
+        </div>
+
+        <div id="timer" class="timer-box">Sincronizando con los astros...</div>
+        <br>
+        <!-- BOTÓN DE NOTIFICACIONES -->
+        <button id="notifyBtn" class="notify-btn" style="display: none;">
+            <i class="fa-solid fa-bell"></i> Activar Notificaciones
+        </button>
+
+        <div id="resultDisplay" class="result-display">
+            <h2 id="arcanaName"></h2>
+            <img id="arcanaImg" src="" alt="Arcano">
+            <p>Este es tu arcano para el ciclo de hoy.</p>
+            
+            <!-- BOTÓN DE COMPARTIR -->
+            <button id="shareBtn" class="share-btn">
+                <i class="fa-solid fa-share-nodes"></i> Compartir mi Arcano
+            </button>
+        </div>
+
+        <div class="history-section">
+            <h2>Historial de Arcanos (Últimos 7 días)</h2>
+            <div class="history-grid" id="historyGrid"></div>
+            
+            <div class="search-section">
+                <h3>Buscar resultado por fecha</h3>
+                <div class="search-controls">
+                    <input type="date" id="searchDate" class="date-picker">
+                    <button id="searchBtn" class="search-btn">Buscar resultados</button>
+                </div>
+                <div id="searchResult" class="search-result"></div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE PREGUNTAS FRECUENTES -->
+        <section id="faq" class="info-section">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <h4>¿Cuándo se actualiza la ruleta?</h4>
+                <p>La ruleta gira automáticamente todos los días a las 7:00 PM (Hora Venezuela).</p>
+            </div>
+            <div class="faq-item">
+                <h4>¿Puedo ver los resultados de días anteriores?</h4>
+                <p>Sí, el sistema muestra los últimos 7 días en la parte superior y te permite consultar cualquier fecha anterior usando el calendario.</p>
+            </div>
+            <div class="faq-item">
+                <h4>¿Qué son los Arcanos Mayores?</h4>
+                <p>Son los 22 arquetipos principales del tarot que representan las lecciones espirituales y kármicas de la vida.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CONTACTO -->
+        <section id="contacto" class="info-section">
+            <h2>Contacto</h2>
+            <p>¿Tienes dudas sobre tu lectura o el oráculo? Escríbenos y con gusto te orientaremos en tu camino espiritual.</p>
+            <p><strong>Correo electrónico:</strong> contacto@lottoluna.com</p>
+        </section>
+    </div>
+
+    <!-- FOOTER CON LOGOS DE REDES SOCIALES -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="social-buttons">
+                <a href="https://facebook.com" target="_blank" class="social-btn facebook" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="social-btn instagram" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://whatsapp.com" target="_blank" class="social-btn whatsapp" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+            <p class="copyright">Copyright © 2026. Todos los derechos reservados. Lotto Luna</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
