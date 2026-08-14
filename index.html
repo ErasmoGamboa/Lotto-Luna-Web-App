@@ -89,19 +89,15 @@
             </div>
             <div class="faq-item">
                 <h4>¿Cuánto gano jugando Lotto Luna?</h4>
-                <p>Sí el Arcano que elegiste ese día sale, se te pagará x13 veces el monto apostado a ese Arcano.</p>
+                <p>Si el Arcano que elegiste ese día sale, se te pagará x13 veces el monto apostado a ese Arcano.</p>
             </div>
             <div class="faq-item">
                 <h4>¿Qué son los Arcanos Mayores?</h4>
                 <p>Son los 22 arquetipos principales del tarot que representan las lecciones espirituales y kármicas de la vida.</p>
             </div>
             <div class="faq-item">
-                <h4>¿Como se juega a Lotto Luna?</h4>
-                <p>Primero elige uno o hasta 3 arcanos mayores del tarot de tu preferencia. Luego haz una transferencia bancaria o pago movil a nuestras cuentas oficiales con el monto de tu apuesta. Espera el sorteo diario a las 7:00 PM (Hora Venezuela) y si resultas ganador, reclama tu premio a nuestros partners oficiales</p>
-            </div>
-            <div class="faq-item">
-                <h4>¿Como se juega a Lotto Luna?</h4>
-                <p>Es muy facil, primero elige uno o hasta 3 arcanos mayores del tarot de tu preferencia. Luego haz una transferencia bancaria o pago movil a nuestras cuentas oficiales con el monto de tu apuesta. Espera el sorteo diario a las 7:00 PM (Hora Venezuela) y si aciertas con el resultado, reclama tu premio a nuestros partners oficiales el dia siguiente.</p>
+                <h4>¿Cómo se juega a Lotto Luna?</h4>
+                <p>Es muy fácil: primero elige uno o hasta 3 arcanos mayores del tarot de tu preferencia en nuestras bancas asociadas. Espera el sorteo diario a las 7:00 PM (Hora Venezuela) y si aciertas con el resultado, reclama tu premio al día siguiente.</p>
             </div>
         </section>
 
@@ -131,6 +127,25 @@
         </div>
     </footer>
 
+    <!-- SDK de Firebase para lectura de resultados en directo -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import { getFirestore, doc, getDoc, getDocs, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyD0WPckIyUzyWjA5f0l1RzpZFG2Eg46V3Q",
+        authDomain: "lotto-luna.firebaseapp.com",
+        projectId: "lotto-luna",
+        storageBucket: "lotto-luna.firebasestorage.app",
+        messagingSenderId: "797784452357",
+        appId: "1:797784452357:web:b81c039b25de433a97db6c",
+        measurementId: "G-FYBE7ZGV4M"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      window.db = getFirestore(app);
+      window.fbDb = { doc, getDoc, getDocs, collection: (dbRef, path) => collection(dbRef, path), onSnapshot };
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

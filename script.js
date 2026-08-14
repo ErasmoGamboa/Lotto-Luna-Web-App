@@ -1,52 +1,48 @@
 // Base de datos de los 22 Arcanos Mayores
 const arcanos = [
-    { id: 0, nombre: "0 - El Loco", img: "imagenes/El Loco.jpg" },
-    { id: 1, nombre: "I - El Mago", img: "imagenes/El Mago.jpg" },
-    { id: 2, nombre: "II -La Suma Sacerdotisa", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Sacerdotisa" },
-    { id: 3, nombre: "III - La Emperatriz", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Emperatriz" },
-    { id: 4, nombre: "IV - El Emperador", img: "https://placehold.co/150x250/2c003e/d4af37?text=El+Emperador" },
-    { id: 5, nombre: "V - El Hierofante", img: "https://placehold.co/150x250/2c003e/d4af37?text=El+Hierofante" },
-    { id: 6, nombre: "VI - Los Enamorados", img: "imagenes/Los Enamorados.jpg" },
-    { id: 7, nombre: "VII - El Carro", img: "https://placehold.co/150x250/2c003e/d4af37?text=El+Carro" },
-    { id: 8, nombre: "VIII - La Fuerza", img: "imagenes/La Fuerza.jpg" },
-    { id: 9, nombre: "IX - El Ermitaño", img: "imagenes/El Ermitaño.jpg" },
-    { id: 10, nombre: "X - La Rueda de la Fortuna", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Rueda" },
-    { id: 11, nombre: "XI - La Justicia", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Justicia" },
-    { id: 12, nombre: "XII - El Colgado", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Colgado" },
-    { id: 13, nombre: "XIII - La Muerte", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Muerte" },
-    { id: 14, nombre: "XIV - La Templanza", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Templanza" },
-    { id: 15, nombre: "XV - El Diablo", img: "https://placehold.co/150x250/2c003e/d4af37?text=La+Diablo" },
-    { id: 16, nombre: "XVI - La Torre", img: "imagenes/La Torre.jpg" },
-    { id: 17, nombre: "XVII - La Estrella", img: "imagenes/La Estrella.jpg" },
-    { id: 18, nombre: "XVIII - La Luna", img: "imagenes/La Luna.jpg" },
-    { id: 19, nombre: "XIX - El Sol", img: "imagenes/El Sol.jpg" },
-    { id: 20, nombre: "XX - El Juicio", img: "https://placehold.co/150x250/2c003e/d4af37?text=El+Juicio" },
-    { id: 21, nombre: "XXI - El Mundo", img: "imagenes/El Mundo.jpg" }
+    { id: 0, nombre: "0. El Loco", img: "imagenes/El Loco.jpg" },
+    { id: 1, nombre: "I. El Mago", img: "imagenes/El Mago.jpg" },
+    { id: 2, nombre: "II. La Sacerdotisa", img: "imagenes/La Sacerdotisa.jpg" },
+    { id: 3, nombre: "III. La Emperatriz", img: "imagenes/La Emperatriz.jpg" },
+    { id: 4, nombre: "IV. El Emperador", img: "imagenes/El Emperador.jpg" },
+    { id: 5, nombre: "V. El Sumo Sacerdote", img: "imagenes/El Sumo Sacerdote.jpg" },
+    { id: 6, nombre: "VI. Los Enamorados", img: "imagenes/Los Enamorados.jpg" },
+    { id: 7, nombre: "VII. El Carro", img: "imagenes/El Carro.jpg" },
+    { id: 8, nombre: "VIII. La Justicia", img: "imagenes/La Justicia.jpg" },
+    { id: 9, nombre: "IX. El Ermitaño", img: "imagenes/El Ermitaño.jpg" },
+    { id: 10, nombre: "X. La Rueda de la Fortuna", img: "imagenes/La Rueda de la Fortuna.jpg" },
+    { id: 11, nombre: "XI. La Fuerza", img: "imagenes/La Fuerza.jpg" },
+    { id: 12, nombre: "XII. El Colgado", img: "imagenes/El Colgado.jpg" },
+    { id: 13, nombre: "XIII. La Muerte", img: "imagenes/La Muerte.jpg" },
+    { id: 14, nombre: "XIV. La Templanza", img: "imagenes/La Templanza.jpg" },
+    { id: 15, nombre: "XV. El Diablo", img: "imagenes/El Diablo.jpg" },
+    { id: 16, nombre: "XVI. La Torre", img: "imagenes/La Torre.jpg" },
+    { id: 17, nombre: "XVII. La Estrella", img: "imagenes/La Estrella.jpg" },
+    { id: 18, nombre: "XVIII. La Luna", img: "imagenes/La Luna.jpg" },
+    { id: 19, nombre: "XIX. El Sol", img: "imagenes/El Sol.jpg" },
+    { id: 20, nombre: "XX. El Juicio", img: "imagenes/El Juicio.jpg" },
+    { id: 21, nombre: "XXI. El Mundo", img: "imagenes/El Mundo.jpg" }
 ];
 
 function formatDate(dateString) {
     if (!dateString) return "";
     const parts = dateString.split("-");
     if (parts.length === 3) {
-        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        return `${parts[0]}/${parts[1]}/${parts[2]}`;
     }
     return dateString;
 }
 
 function getVETTime() {
-    const now = new Date();
-    const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const vetTime = new Date(utcTime - (4 * 3600000));
-    return vetTime;
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Caracas' }));
 }
 
-function getCurrentCycleId() {
+function getIdHoyVenezuela() {
     const vet = getVETTime();
-    let cycleDate = new Date(vet);
-    if (vet.getHours() < 19) {
-        cycleDate.setDate(cycleDate.getDate() - 1);
-    }
-    return `${cycleDate.getFullYear()}-${String(cycleDate.getMonth()+1).padStart(2, '0')}-${String(cycleDate.getDate()).padStart(2, '0')}`;
+    const dia = String(vet.getDate()).padStart(2, '0');
+    const mes = String(vet.getMonth() + 1).padStart(2, '0');
+    const anio = vet.getFullYear();
+    return `${dia}-${mes}-${anio}`;
 }
 
 const wheel = document.getElementById('wheel');
@@ -56,6 +52,8 @@ const timerDisplay = document.getElementById('timer');
 
 let currentRotation = 0;
 let isSpinning = false;
+let resultadoHoyMostrado = false;
+let intervaloTimer = null;
 
 // --- GESTIÓN DE NOTIFICACIONES ---
 const notifyBtn = document.getElementById('notifyBtn');
@@ -83,53 +81,42 @@ function initNotifications() {
 function triggerPushNotification(arcanoName) {
     if ("Notification" in window && Notification.permission === "granted") {
         new Notification("✨ El Oráculo ha hablado ✨", {
-            body: `Tu carta de hoy es ${arcanoName}. Descubre tu mensaje.`,
-            icon: "logo.png" // Utiliza tu logo como icono
+            body: `El Arcano Ganador de hoy es ${arcanoName}. ¡Revisa tu ticket!`,
+            icon: "logo.png"
         });
     }
 }
 
-// --- GESTIÓN DE COMPARTIR REDES SOCIALES ---
+// --- GESTIÓN DE COMPARTIR ---
 const shareBtn = document.getElementById('shareBtn');
+if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+        const arcanoActual = document.getElementById('arcanaName').innerText;
+        const shareData = {
+            title: 'Arcano Ganador - Lotto Luna',
+            text: `✨ El Arcano Ganador de hoy en Lotto Luna es: ${arcanoActual}. Descubre tu suerte en:`,
+            url: window.location.href
+        };
 
-shareBtn.addEventListener('click', async () => {
-    const arcanoActual = document.getElementById('arcanaName').innerText;
-    const shareData = {
-        title: 'Mi Arcano de Hoy - Lotto Luna',
-        text: `✨ ¡El Oráculo me ha revelado mi destino! Mi arcano de hoy es: ${arcanoActual}. Descubre el tuyo en Lotto Luna.`,
-        url: window.location.href // Comparte el enlace de tu web
-    };
-
-    try {
-        if (navigator.share) {
-            // Abre el menú nativo del celular (WhatsApp, Instagram, etc)
-            await navigator.share(shareData);
-        } else {
-            // Plan B para computadoras: Copia al portapapeles
-            await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-            alert("¡Texto copiado! Pégalo en Facebook, WhatsApp o donde quieras.");
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+                alert("¡Texto copiado al portapapeles!");
+            }
+        } catch (err) {
+            console.log("Error al compartir: ", err);
         }
-    } catch (err) {
-        console.log("Error al compartir: ", err);
-    }
-});
-
+    });
+}
 
 function buildWheel() {
     const numSlices = 22;
     const sliceAngle = 360 / numSlices;
-    const offsetAngle = sliceAngle / 2; 
-    let gradientStr = `conic-gradient(from -${offsetAngle}deg, `;
-    
-    for (let i = 0; i < numSlices; i++) {
-        const color = i % 2 === 0 ? '#3a0052' : '#4b0082';
-        const start = i * sliceAngle;
-        const end = (i + 1) * sliceAngle;
-        gradientStr += `${color} ${start}deg ${end}deg${i === numSlices - 1 ? '' : ', '}`;
-    }
-    gradientStr += ')';
+
     wheel.style.background = 'none';
-    wheel.style.backgroundImage = 'url("Imagenes/Ruleta Arcanos.png")';
+    wheel.style.backgroundImage = 'url("imagenes/Ruleta Arcanos.png")';
     wheel.style.backgroundSize = 'cover';
     wheel.style.backgroundPosition = 'center';
     wheel.style.backgroundRepeat = 'no-repeat';
@@ -143,72 +130,77 @@ function buildWheel() {
     });
 }
 
-function updateTimer() {
-    const vet = getVETTime();
-    let next7PM = new Date(vet);
-    next7PM.setHours(19, 0, 0, 0);
+// --- TEMPORIZADOR DE CONTEO REGRESIVO ---
+function iniciarTemporizadorConcurrente() {
+    if (intervaloTimer) clearInterval(intervaloTimer);
 
-    if (vet.getHours() >= 19) {
-        next7PM.setDate(next7PM.getDate() + 1);
-    }
+    const ejecutarConteo = () => {
+        if (resultadoHoyMostrado) return;
 
-    const diff = next7PM - vet;
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        const vet = getVETTime();
+        let next7PM = new Date(vet);
+        next7PM.setHours(19, 0, 0, 0);
 
-    if (!isSpinning) {
-        timerDisplay.innerText = `Próximo giro en: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }
-    
-    checkTimeAndSpin();
-}
+        const diff = next7PM - vet;
 
-function checkTimeAndSpin() {
-    const cycleId = getCurrentCycleId();
-    const history = JSON.parse(localStorage.getItem('tarotHistory')) || {};
+        if (diff <= 0) {
+            timerDisplay.innerHTML = "✨ ¡El velo se está descorriendo! Aguardando la revelación oficial... ✨";
+        } else {
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if (history[cycleId] !== undefined) return;
-
-    const vet = getVETTime();
-    if (vet.getHours() >= 19) {
-        if (!isSpinning) {
-            autoSpinWheel();
+            timerDisplay.innerHTML = `La carta del arcano ganador del día de hoy se revelará en:<br><strong style="font-size:1.25rem; color:#fff; display:block; margin-top:5px;">${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(segundos).padStart(2, '0')}s</strong>`;
         }
-    }
+    };
+
+    ejecutarConteo(); // Ejecutar inmediatamente para evitar parpadeos
+    intervaloTimer = setInterval(ejecutarConteo, 1000);
 }
 
-function autoSpinWheel() {
-    isSpinning = true;
-    const cycleId = getCurrentCycleId();
-    const history = JSON.parse(localStorage.getItem('tarotHistory')) || {};
+// --- ESCUCHA EN TIEMPO REAL CON FIRESTORE ---
+function escucharResultadoHoyBD() {
+    const docIdHoy = getIdHoyVenezuela();
 
-    timerDisplay.innerText = "¡Los astros se están alineando!...";
+    window.fbDb.onSnapshot(window.fbDb.doc(window.db, "resultados_diarios", docIdHoy), (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            const indiceGanador = Number(data.indice);
+            
+            if (!resultadoHoyMostrado && !isSpinning) {
+                girarHaciaWinnerIndex(indiceGanador, arcanos[indiceGanador]);
+            }
+        } else {
+            // Si no hay resultado, asegurar que el contenedor de resultado esté oculto
+            resultDisplay.style.display = 'none';
+        }
+    });
+}
+
+function girarHaciaWinnerIndex(winnerIndex, arcanoObjeto) {
+    isSpinning = true;
+    resultadoHoyMostrado = true;
+    if (intervaloTimer) clearInterval(intervaloTimer);
+
+    timerDisplay.innerHTML = "✨ ¡El Oráculo está revelando el Arcano Ganador de hoy! ✨";
     resultDisplay.style.display = 'none';
 
-    const winnerIndex = Math.floor(Math.random() * 22);
     const sliceAngle = 360 / 22;
     const extraSpins = 360 * 6; 
     const offset = 270; 
     
     const targetRotation = extraSpins + offset - (winnerIndex * sliceAngle);
-    
     currentRotation += targetRotation;
+    
+    wheel.style.transition = 'transform 5.5s cubic-bezier(0.15, 0.85, 0.1, 1)';
     wheel.style.transform = `rotate(${currentRotation}deg)`;
 
     setTimeout(() => {
-        history[cycleId] = winnerIndex;
-        localStorage.setItem('tarotHistory', JSON.stringify(history));
-        
-        showResult(arcanos[winnerIndex]);
-        renderHistory();
-        
-        // Lanzamos la notificación Push cuando se revela el ganador
-        triggerPushNotification(arcanos[winnerIndex].nombre);
-        
+        showResult(arcanoObjeto);
+        triggerPushNotification(arcanoObjeto.nombre);
         isSpinning = false;
-        updateTimer();
-    }, 5000);
+        timerDisplay.innerHTML = "🌕 ¡Resultado Oficial Revelado! 🌕";
+    }, 5500);
 }
 
 function showResult(arcano) {
@@ -217,82 +209,96 @@ function showResult(arcano) {
     resultDisplay.style.display = 'block';
 }
 
-function renderHistory() {
-    const history = JSON.parse(localStorage.getItem('tarotHistory')) || {};
-    historyGrid.innerHTML = '';
+// --- RENDERING Y BÚSQUEDA HISTÓRICA DESDE FIRESTORE ---
+async function renderHistoryFromBD() {
+    try {
+        const q = window.fbDb.collection(window.db, "resultados_diarios");
+        const snapshot = await window.fbDb.getDocs(q);
+        let resultados = [];
 
-    const dates = Object.keys(history).sort((a, b) => b.localeCompare(a));
-    const last7Dates = dates.slice(0, 7);
+        snapshot.forEach(d => resultados.push(d.data()));
+        resultados.sort((a, b) => new Date(b.generadoEn || 0) - new Date(a.generadoEn || 0));
 
-    if (last7Dates.length === 0) {
-        historyGrid.innerHTML = '<p style="grid-column: 1/-1; color: #888;">No hay resultados anteriores aún.</p>';
-        return;
+        const ultimos7 = resultados.slice(0, 7);
+        historyGrid.innerHTML = '';
+
+        if (ultimos7.length === 0) {
+            historyGrid.innerHTML = '<p style="grid-column: 1/-1; color: #888;">No hay resultados registrados todavía.</p>';
+            return;
+        }
+
+        ultimos7.forEach(res => {
+            const idx = res.indice;
+            const arc = arcanos[idx] || { nombre: res.nombre, img: 'logo.png' };
+            const cardHtml = `
+                <div class="history-card">
+                    <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">${res.nombre}</div>
+                    <img src="${arc.img}" alt="${res.nombre}">
+                    <div class="date">${res.fecha}</div>
+                </div>
+            `;
+            historyGrid.innerHTML += cardHtml;
+        });
+    } catch (e) {
+        console.error("Error al cargar historial:", e);
     }
-
-    last7Dates.forEach(date => {
-        const arcano = arcanos[history[date]];
-        const formattedDate = formatDate(date);
-        const cardHtml = `
-            <div class="history-card">
-                <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">${arcano.nombre}</div>
-                <img src="${arcano.img}" alt="${arcano.nombre}">
-                <div class="date">${formattedDate}</div>
-            </div>
-        `;
-        historyGrid.innerHTML += cardHtml;
-    });
 }
 
-// --- LÓGICA DE BÚSQUEDA ---
+// --- BUSCADOR POR CALENDARIO ---
 const searchBtn = document.getElementById('searchBtn');
 const searchDateInput = document.getElementById('searchDate');
 const searchResult = document.getElementById('searchResult');
 
-searchBtn.addEventListener('click', () => {
-    const selectedDate = searchDateInput.value; 
-    
-    if (!selectedDate) {
-        searchResult.innerHTML = '<span style="color: #ffaa00;">Por favor, selecciona una fecha en el calendario.</span>';
-        return;
-    }
+if (searchBtn) {
+    searchBtn.addEventListener('click', async () => {
+        const selectedDate = searchDateInput.value; // Formato YYYY-MM-DD
+        
+        if (!selectedDate) {
+            searchResult.innerHTML = '<span style="color: #ffaa00;">Por favor, selecciona una fecha en el calendario.</span>';
+            return;
+        }
 
-    const history = JSON.parse(localStorage.getItem('tarotHistory')) || {};
-    const formattedDisplayDate = formatDate(selectedDate);
-    
-    if (history[selectedDate] !== undefined) {
-        const arcano = arcanos[history[selectedDate]];
-        searchResult.innerHTML = `
-            <p style="margin-top:0;">El arcano del ciclo <strong>${formattedDisplayDate}</strong> fue:</p>
-            <div class="history-card" style="max-width: 120px; margin: 0 auto; background: rgba(44, 0, 62, 0.8);">
-                <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">${arcano.nombre}</div>
-                <img src="${arcano.img}" alt="${arcano.nombre}">
-            </div>
-        `;
-    } else {
-        searchResult.innerHTML = `<span style="color: #aaa;">No hubo resultado registrado para el ciclo ${formattedDisplayDate}.</span>`;
-    }
-});
+        const partes = selectedDate.split('-');
+        const docId = `${partes[2]}-${partes[1]}-${partes[0]}`; // Convertir a DD-MM-YYYY
+        const fechaMostrar = `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+        try {
+            searchResult.innerHTML = '<span style="color: #aaa;">Consultando oráculo...</span>';
+            const docSnap = await window.fbDb.getDoc(window.fbDb.doc(window.db, "resultados_diarios", docId));
+
+            if (docSnap.exists()) {
+                const res = docSnap.data();
+                const arc = arcanos[res.indice] || { nombre: res.nombre, img: 'logo.png' };
+
+                searchResult.innerHTML = `
+                    <p style="margin-top:0;">El arcano ganador del <strong>${fechaMostrar}</strong> fue:</p>
+                    <div class="history-card" style="max-width: 130px; margin: 0 auto; background: rgba(44, 0, 62, 0.8);">
+                        <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">${res.nombre}</div>
+                        <img src="${arc.img}" alt="${res.nombre}">
+                    </div>
+                `;
+            } else {
+                searchResult.innerHTML = `<span style="color: #aaa;">No hay resultado registrado para la fecha ${fechaMostrar}.</span>`;
+            }
+        } catch (e) {
+            searchResult.innerHTML = '<span style="color: #e74c3c;">Error al consultar la base de datos.</span>';
+        }
+    });
+}
 
 function init() {
     buildWheel();
-    initNotifications(); // Llama a la inicialización de notificaciones
-
-    const cycleId = getCurrentCycleId();
-    const history = JSON.parse(localStorage.getItem('tarotHistory')) || {};
-
-    renderHistory();
-
-    if (history[cycleId] !== undefined) {
-        showResult(arcanos[history[cycleId]]);
-        
-        const sliceAngle = 360 / 22;
-        const offset = 270;
-        wheel.style.transition = 'none'; 
-        wheel.style.transform = `rotate(${offset - (history[cycleId] * sliceAngle)}deg)`;
-    }
+    initNotifications();
+    iniciarTemporizadorConcurrente(); // Iniciar inmediatamente sin esperar a la BD
     
-    setInterval(updateTimer, 1000);
-    updateTimer();
+    // Esperar conexión con Firestore y ejecutar listeners
+    const checkBD = setInterval(() => {
+        if (window.fbDb) {
+            clearInterval(checkBD);
+            escucharResultadoHoyBD();
+            renderHistoryFromBD();
+        }
+    }, 100);
 }
 
-init();
+document.addEventListener('DOMContentLoaded', init);
