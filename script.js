@@ -12,7 +12,7 @@ const arcanos = [
     { id: 9, nombre: "IX. El Ermitaño", img: "imagenes/El Ermitaño.jpg" },
     { id: 10, nombre: "X. La Rueda de la Fortuna", img: "imagenes/La Rueda de la Fortuna.jpg" },
     { id: 11, nombre: "XI. La Fuerza", img: "imagenes/La Fuerza.jpg" },
-    { id: 12, nombre: "XII. El Colgado", img: "imagenes/El Colgado.jpg" },
+    { id: 12, nombre: "XII. El Colgado", img: "imagenes/La Colgado.jpg" },
     { id: 13, nombre: "XIII. La Muerte", img: "imagenes/La Muerte.jpg" },
     { id: 14, nombre: "XIV. La Templanza", img: "imagenes/La Templanza.jpg" },
     { id: 15, nombre: "XV. El Diablo", img: "imagenes/El Diablo.jpg" },
@@ -23,15 +23,6 @@ const arcanos = [
     { id: 20, nombre: "XX. El Juicio", img: "imagenes/El Juicio.jpg" },
     { id: 21, nombre: "XXI. El Mundo", img: "imagenes/El Mundo.jpg" }
 ];
-
-function formatDate(dateString) {
-    if (!dateString) return "";
-    const parts = dateString.split("-");
-    if (parts.length === 3) {
-        return `${parts[0]}/${parts[1]}/${parts[2]}`;
-    }
-    return dateString;
-}
 
 function getVETTime() {
     return new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Caracas' }));
@@ -150,18 +141,19 @@ function iniciarTemporizadorConcurrente() {
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            timerDisplay.innerHTML = `La carta del arcano ganador del día de hoy se revelará en:<br><strong style="font-size:1.25rem; color:#fff; display:block; margin-top:5px;">${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(segundos).padStart(2, '0')}s</strong>`;
+            timerDisplay.innerHTML = `La carta del arcano ganador del día de hoy se revelará en:<br><strong style="font-size:1.15rem; color:#fff; display:block; margin-top:5px;">${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s</strong>`;
         }
     };
 
-    ejecutarConteo(); // Ejecutar inmediatamente para evitar parpadeos
+    ejecutarConteo();
     intervaloTimer = setInterval(ejecutarConteo, 1000);
 }
 
-// --- ESCUCHA EN TIEMPO REAL CON FIRESTORE ---
-function escucharResultadoHoyBD() {
+// --- SINCRONIZACIÓN Y ESCUCHA EN TIEMPO REAL CON FIRESTORE ---
+function inicializarSistemaFirebase() {
     const docIdHoy = getIdHoyVenezuela();
 
+    // 1. Escuchar el resultado del día de hoy en tiempo real
     window.fbDb.onSnapshot(window.fbDb.doc(window.db, "resultados_diarios", docIdHoy), (docSnap) => {
         if (docSnap.exists()) {
             const data = docSnap.data();
@@ -171,9 +163,48 @@ function escucharResultadoHoyBD() {
                 girarHaciaWinnerIndex(indiceGanador, arcanos[indiceGanador]);
             }
         } else {
-            // Si no hay resultado, asegurar que el contenedor de resultado esté oculto
             resultDisplay.style.display = 'none';
         }
+    });
+
+    // 2. Escuchar toda la colección para actualizar el historial de los últimos 7 días automáticamente en vivo
+    window.fbDb.onSnapshot(window.fbDb.collection(window.db, "resultados_diarios"), (snapshot) => {
+        let resultados = [];
+
+        snapshot.forEach(d => {
+            const data = d.data();
+            resultados.push({ id: d.id, ...data });
+        });
+
+        // Ordenar del más reciente al más antiguo basándonos en el ID (DD-MM-YYYY)
+        resultados.sort((a, b) => {
+            const partesA = a.id.split('-');
+            const partesB = b.id.split('-');
+            const fechaA = new Date(`${partesA[2]}-${partesA[1]}-${partesA[0]}`);
+            const fechaB = new Date(`${partesB[2]}-${partesB[1]}-${partesB[0]}`);
+            return fechaB - fechaA;
+        });
+
+        const ultimos7 = resultados.slice(0, 7);
+        historyGrid.innerHTML = '';
+
+        if (ultimos7.length === 0) {
+            historyGrid.innerHTML = '<p style="grid-column: 1/-1; color: #888;">No hay resultados registrados todavía.</p>';
+            return;
+        }
+
+        ultimos7.forEach(res => {
+            const idx = Number(res.indice);
+            const arc = arcanos[idx] || { nombre: res.nombre, img: 'logo.png' };
+            const cardHtml = `
+                <div class="history-card">
+                    <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">${res.nombre}</div>
+                    <img src="${arc.img}" alt="${res.nombre}">
+                    <div class="date">${res.fecha}</div>
+                </div>
+            `;
+            historyGrid.innerHTML += cardHtml;
+        });
     });
 }
 
@@ -209,41 +240,6 @@ function showResult(arcano) {
     resultDisplay.style.display = 'block';
 }
 
-// --- RENDERING Y BÚSQUEDA HISTÓRICA DESDE FIRESTORE ---
-async function renderHistoryFromBD() {
-    try {
-        const q = window.fbDb.collection(window.db, "resultados_diarios");
-        const snapshot = await window.fbDb.getDocs(q);
-        let resultados = [];
-
-        snapshot.forEach(d => resultados.push(d.data()));
-        resultados.sort((a, b) => new Date(b.generadoEn || 0) - new Date(a.generadoEn || 0));
-
-        const ultimos7 = resultados.slice(0, 7);
-        historyGrid.innerHTML = '';
-
-        if (ultimos7.length === 0) {
-            historyGrid.innerHTML = '<p style="grid-column: 1/-1; color: #888;">No hay resultados registrados todavía.</p>';
-            return;
-        }
-
-        ultimos7.forEach(res => {
-            const idx = res.indice;
-            const arc = arcanos[idx] || { nombre: res.nombre, img: 'logo.png' };
-            const cardHtml = `
-                <div class="history-card">
-                    <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">${res.nombre}</div>
-                    <img src="${arc.img}" alt="${res.nombre}">
-                    <div class="date">${res.fecha}</div>
-                </div>
-            `;
-            historyGrid.innerHTML += cardHtml;
-        });
-    } catch (e) {
-        console.error("Error al cargar historial:", e);
-    }
-}
-
 // --- BUSCADOR POR CALENDARIO ---
 const searchBtn = document.getElementById('searchBtn');
 const searchDateInput = document.getElementById('searchDate');
@@ -268,7 +264,7 @@ if (searchBtn) {
 
             if (docSnap.exists()) {
                 const res = docSnap.data();
-                const arc = arcanos[res.indice] || { nombre: res.nombre, img: 'logo.png' };
+                const arc = arcanos[Number(res.indice)] || { nombre: res.nombre, img: 'logo.png' };
 
                 searchResult.innerHTML = `
                     <p style="margin-top:0;">El arcano ganador del <strong>${fechaMostrar}</strong> fue:</p>
@@ -289,14 +285,13 @@ if (searchBtn) {
 function init() {
     buildWheel();
     initNotifications();
-    iniciarTemporizadorConcurrente(); // Iniciar inmediatamente sin esperar a la BD
+    iniciarTemporizadorConcurrente(); // Arranca el temporizador de inmediato
     
-    // Esperar conexión con Firestore y ejecutar listeners
+    // Esperar a que el módulo de Firebase inyectado en el HTML esté listo
     const checkBD = setInterval(() => {
         if (window.fbDb) {
             clearInterval(checkBD);
-            escucharResultadoHoyBD();
-            renderHistoryFromBD();
+            inicializarSistemaFirebase();
         }
     }, 100);
 }
