@@ -1,4 +1,4 @@
-// Base de datos de los 22 Arcanos Mayores
+// Base de datos oficial sincronizada de los 22 Arcanos Mayores
 const arcanos = [
     { id: 0, nombre: "0. El Loco", img: "imagenes/El Loco.jpg" },
     { id: 1, nombre: "I. El Mago", img: "imagenes/El Mago.jpg" },
@@ -12,7 +12,7 @@ const arcanos = [
     { id: 9, nombre: "IX. El Ermitaño", img: "imagenes/El Ermitaño.jpg" },
     { id: 10, nombre: "X. La Rueda de la Fortuna", img: "imagenes/La Rueda de la Fortuna.jpg" },
     { id: 11, nombre: "XI. La Fuerza", img: "imagenes/La Fuerza.jpg" },
-    { id: 12, nombre: "XII. El Colgado", img: "imagenes/La Colgado.jpg" },
+    { id: 12, nombre: "XII. El Colgado", img: "imagenes/El Colgado.jpg" },
     { id: 13, nombre: "XIII. La Muerte", img: "imagenes/La Muerte.jpg" },
     { id: 14, nombre: "XIV. La Templanza", img: "imagenes/La Templanza.jpg" },
     { id: 15, nombre: "XV. El Diablo", img: "imagenes/El Diablo.jpg" },
@@ -216,7 +216,8 @@ function girarHaciaWinnerIndex(winnerIndex, arcanoObjeto) {
     timerDisplay.innerHTML = "✨ ¡El Oráculo está revelando el Arcano Ganador de hoy! ✨";
     resultDisplay.style.display = 'none';
 
-    const sliceAngle = 360 / 22;
+    const numSlices = 22;
+    const sliceAngle = 360 / numSlices;
     const extraSpins = 360 * 6; 
     const offset = 270; 
     
@@ -285,9 +286,8 @@ if (searchBtn) {
 function init() {
     buildWheel();
     initNotifications();
-    iniciarTemporizadorConcurrente(); // Arranca el temporizador de inmediato
+    iniciarTemporizadorConcurrente();
     
-    // Esperar a que el módulo de Firebase inyectado en el HTML esté listo
     const checkBD = setInterval(() => {
         if (window.fbDb) {
             clearInterval(checkBD);
